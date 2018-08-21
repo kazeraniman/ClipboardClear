@@ -28,14 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClipboardClear));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.clipboardTimeoutLabel = new System.Windows.Forms.Label();
             this.clipboardTimoutNUD = new System.Windows.Forms.NumericUpDown();
             this.secondsLabel = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.notifyIconMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.notifyIconMenuStripShowItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.notifyIconMenuStripExitItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clipboardTimoutNUD)).BeginInit();
+            this.notifyIconMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -62,7 +68,7 @@
             this.clipboardTimeoutLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.clipboardTimeoutLabel.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.clipboardTimeoutLabel, 2);
-            this.clipboardTimeoutLabel.Location = new System.Drawing.Point(82, 11);
+            this.clipboardTimeoutLabel.Location = new System.Drawing.Point(82, 12);
             this.clipboardTimeoutLabel.Name = "clipboardTimeoutLabel";
             this.clipboardTimeoutLabel.Size = new System.Drawing.Size(119, 13);
             this.clipboardTimeoutLabel.TabIndex = 0;
@@ -71,7 +77,7 @@
             // clipboardTimoutNUD
             // 
             this.clipboardTimoutNUD.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.clipboardTimoutNUD.Location = new System.Drawing.Point(61, 44);
+            this.clipboardTimoutNUD.Location = new System.Drawing.Point(61, 45);
             this.clipboardTimoutNUD.Maximum = new decimal(new int[] {
             60,
             0,
@@ -96,7 +102,7 @@
             // 
             this.secondsLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.secondsLabel.AutoSize = true;
-            this.secondsLabel.Location = new System.Drawing.Point(187, 47);
+            this.secondsLabel.Location = new System.Drawing.Point(187, 49);
             this.secondsLabel.Name = "secondsLabel";
             this.secondsLabel.Size = new System.Drawing.Size(47, 13);
             this.secondsLabel.TabIndex = 2;
@@ -106,12 +112,43 @@
             // 
             this.saveButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableLayoutPanel1.SetColumnSpan(this.saveButton, 2);
-            this.saveButton.Location = new System.Drawing.Point(104, 80);
+            this.saveButton.Location = new System.Drawing.Point(104, 81);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 3;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
+            // 
+            // notifyIcon
+            // 
+            this.notifyIcon.BalloonTipTitle = "Clipboard Clear";
+            this.notifyIcon.ContextMenuStrip = this.notifyIconMenuStrip;
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "Clipboard Clear";
+            this.notifyIcon.Visible = true;
+            this.notifyIcon.DoubleClick += new System.EventHandler(this.notifyIcon_DoubleClick);
+            // 
+            // notifyIconMenuStrip
+            // 
+            this.notifyIconMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.notifyIconMenuStripShowItem,
+            this.notifyIconMenuStripExitItem});
+            this.notifyIconMenuStrip.Name = "notifyIconMenuStrip";
+            this.notifyIconMenuStrip.Size = new System.Drawing.Size(181, 70);
+            // 
+            // notifyIconMenuStripShowItem
+            // 
+            this.notifyIconMenuStripShowItem.Name = "notifyIconMenuStripShowItem";
+            this.notifyIconMenuStripShowItem.Size = new System.Drawing.Size(180, 22);
+            this.notifyIconMenuStripShowItem.Text = "Show";
+            this.notifyIconMenuStripShowItem.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // notifyIconMenuStripExitItem
+            // 
+            this.notifyIconMenuStripExitItem.Name = "notifyIconMenuStripExitItem";
+            this.notifyIconMenuStripExitItem.Size = new System.Drawing.Size(180, 22);
+            this.notifyIconMenuStripExitItem.Text = "Exit";
+            this.notifyIconMenuStripExitItem.Click += new System.EventHandler(this.notifyIconMenuStripExitItem_Click);
             // 
             // ClipboardClear
             // 
@@ -119,13 +156,19 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 111);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "ClipboardClear";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Text = "Clipboard Clear";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+            this.Resize += new System.EventHandler(this.ClipboardClear_Resize);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clipboardTimoutNUD)).EndInit();
+            this.notifyIconMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -137,6 +180,10 @@
         private System.Windows.Forms.NumericUpDown clipboardTimoutNUD;
         private System.Windows.Forms.Label secondsLabel;
         private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.ContextMenuStrip notifyIconMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem notifyIconMenuStripShowItem;
+        private System.Windows.Forms.ToolStripMenuItem notifyIconMenuStripExitItem;
     }
 }
 
