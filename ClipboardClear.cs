@@ -18,6 +18,7 @@ namespace ClipboardClear
 
         private void showWindow()
         {
+            clipboardTimoutNUD.Value = Properties.Settings.Default.TimeToClearClipboard;
             this.WindowState = FormWindowState.Normal;
             this.ShowInTaskbar = true;
             notifyIcon.Visible = false;
@@ -46,6 +47,23 @@ namespace ClipboardClear
         private void notifyIconMenuStripExitItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void clipboardTimoutNUD_ValueChanged(object sender, EventArgs e)
+        {
+            validateSaveButton();
+        }
+
+        private void validateSaveButton()
+        {
+            saveButton.Enabled = clipboardTimoutNUD.Value != Properties.Settings.Default.TimeToClearClipboard;
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.TimeToClearClipboard = (int)clipboardTimoutNUD.Value;
+            Properties.Settings.Default.Save();
+            validateSaveButton();
         }
     }
 }

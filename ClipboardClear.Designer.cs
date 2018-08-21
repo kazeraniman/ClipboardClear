@@ -77,6 +77,7 @@
             // clipboardTimoutNUD
             // 
             this.clipboardTimoutNUD.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.clipboardTimoutNUD.BackColor = System.Drawing.SystemColors.Window;
             this.clipboardTimoutNUD.Location = new System.Drawing.Point(61, 45);
             this.clipboardTimoutNUD.Maximum = new decimal(new int[] {
             60,
@@ -89,6 +90,7 @@
             0,
             0});
             this.clipboardTimoutNUD.Name = "clipboardTimoutNUD";
+            this.clipboardTimoutNUD.ReadOnly = true;
             this.clipboardTimoutNUD.Size = new System.Drawing.Size(120, 20);
             this.clipboardTimoutNUD.TabIndex = 1;
             this.clipboardTimoutNUD.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -97,6 +99,7 @@
             0,
             0,
             0});
+            this.clipboardTimoutNUD.ValueChanged += new System.EventHandler(this.clipboardTimoutNUD_ValueChanged);
             // 
             // secondsLabel
             // 
@@ -118,6 +121,7 @@
             this.saveButton.TabIndex = 3;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // notifyIcon
             // 
@@ -134,19 +138,19 @@
             this.notifyIconMenuStripShowItem,
             this.notifyIconMenuStripExitItem});
             this.notifyIconMenuStrip.Name = "notifyIconMenuStrip";
-            this.notifyIconMenuStrip.Size = new System.Drawing.Size(181, 70);
+            this.notifyIconMenuStrip.Size = new System.Drawing.Size(104, 48);
             // 
             // notifyIconMenuStripShowItem
             // 
             this.notifyIconMenuStripShowItem.Name = "notifyIconMenuStripShowItem";
-            this.notifyIconMenuStripShowItem.Size = new System.Drawing.Size(180, 22);
+            this.notifyIconMenuStripShowItem.Size = new System.Drawing.Size(103, 22);
             this.notifyIconMenuStripShowItem.Text = "Show";
             this.notifyIconMenuStripShowItem.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // notifyIconMenuStripExitItem
             // 
             this.notifyIconMenuStripExitItem.Name = "notifyIconMenuStripExitItem";
-            this.notifyIconMenuStripExitItem.Size = new System.Drawing.Size(180, 22);
+            this.notifyIconMenuStripExitItem.Size = new System.Drawing.Size(103, 22);
             this.notifyIconMenuStripExitItem.Text = "Exit";
             this.notifyIconMenuStripExitItem.Click += new System.EventHandler(this.notifyIconMenuStripExitItem_Click);
             // 
