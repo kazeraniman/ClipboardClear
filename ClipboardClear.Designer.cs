@@ -125,6 +125,8 @@
             // 
             // notifyIcon
             // 
+            this.notifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.notifyIcon.BalloonTipText = "Your clipboard has been cleared!";
             this.notifyIcon.BalloonTipTitle = "Clipboard Clear";
             this.notifyIcon.ContextMenuStrip = this.notifyIconMenuStrip;
             this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
@@ -168,6 +170,7 @@
             this.ShowInTaskbar = false;
             this.Text = "Clipboard Clear";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ClipboardClear_FormClosed);
             this.Resize += new System.EventHandler(this.ClipboardClear_Resize);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
