@@ -49,13 +49,10 @@ namespace ClipboardClear
             AddClipboardFormatListener(this.Handle);
         }
 
-        private void notifyIcon_DoubleClick(object sender, EventArgs e)
-        {
-            showWindow();
-        }
-
+        // Displays the window where all the settings may be configured.
         private void showWindow()
         {
+            // Only go through the act of "showing" the window if it is hidden
             if (this.WindowState != FormWindowState.Normal)
             {
                 clipboardTimoutNUD.Value = Properties.Settings.Default.TimeToClearClipboard;
@@ -63,13 +60,85 @@ namespace ClipboardClear
                 Show();
                 this.WindowState = FormWindowState.Normal;
             }
+
+            // Bring the window into focus
             Activate();
         }
 
+        // Hides the configuration window.
         private void hideWindow()
         {
             this.WindowState = FormWindowState.Minimized;
             Hide();
+        }
+
+        // Determines whether or not the save button should be enabled and then enables it accordingly.
+        private void validateSaveButton()
+        {
+            saveButton.Enabled = clipboardTimoutNUD.Value != Properties.Settings.Default.TimeToClearClipboard || showNotificationsCheckbox.Checked != Properties.Settings.Default.ShowNotifications;
+        }
+
+        // Restarts the timer to clear the clipboard with the currently set timout interval.
+        private void startClearClipboardTimer()
+        {
+            // Stop the timer (in case it is underway)
+            clearClipboardTimer.Stop();
+
+            // Update the interval to the latest value
+            clearClipboardTimer.Interval = Properties.Settings.Default.TimeToClearClipboard * 1000;
+
+            // Start up the timer
+            clearClipboardTimer.Start();
+        }
+
+        // Event handler for the clearClipboardTimer's elapsed event.
+        private void clearClipboardTimerElapsed(object sender, EventArgs e)
+        {
+            BeginInvoke(timerElapsedDelegate);
+        }
+
+        // Clears the clipboard and optionally provides a notification.
+        private void clearClipboard()
+        {
+            Clipboard.Clear();
+            if (Properties.Settings.Default.ShowNotifications)
+            {
+                notifyIcon.ShowBalloonTip(3000);
+            }
+        }
+
+        // Outline courtesy of https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.control.wndproc?redirectedfrom=MSDN&view=netframework-4.7.2#System_Windows_Forms_Control_WndProc_System_Windows_Forms_Message__
+        // Used to intercept changes to the clipboard so that we may deal with them accordingly.
+        protected override void WndProc(ref Message m)
+        {
+            switch (m.Msg)
+            {
+                // Sent when the contents of the clipboard have changed. (https://docs.microsoft.com/en-us/windows/desktop/dataxchg/wm-clipboardupdate)
+                case WM_CLIPBOARDUPDATE:
+                    // Only care about clipboard updates when there is something on the clipboard (e.g. ignore our own clear clipboard events)
+                    if (Clipboard.GetDataObject() != null && Clipboard.GetDataObject().GetFormats().Length > 0)
+                    {
+                        startClearClipboardTimer();
+                    }
+                    break;
+            }
+            base.WndProc(ref m);
+        }
+
+        private void ClipboardClear_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Get rid of the clipboard listener on exit
+            RemoveClipboardFormatListener(Handle);
+        }
+
+        private void showNotificationsCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            validateSaveButton();
+        }
+
+        private void notifyIcon_DoubleClick(object sender, EventArgs e)
+        {
+            showWindow();
         }
 
         private void ClipboardClear_Resize(object sender, EventArgs e)
@@ -95,69 +164,11 @@ namespace ClipboardClear
             validateSaveButton();
         }
 
-        private void validateSaveButton()
-        {
-            saveButton.Enabled = clipboardTimoutNUD.Value != Properties.Settings.Default.TimeToClearClipboard || showNotificationsCheckbox.Checked != Properties.Settings.Default.ShowNotifications;
-        }
-
         private void saveButton_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.TimeToClearClipboard = (int)clipboardTimoutNUD.Value;
             Properties.Settings.Default.ShowNotifications = showNotificationsCheckbox.Checked;
             Properties.Settings.Default.Save();
-            validateSaveButton();
-        }
-
-        private void startClearClipboardTimer()
-        {
-            // Stop the timer (in case it is underway)
-            clearClipboardTimer.Stop();
-
-            // Update the interval to the latest value
-            clearClipboardTimer.Interval = Properties.Settings.Default.TimeToClearClipboard * 1000;
-
-            // Start up the timer
-            clearClipboardTimer.Start();
-        }
-
-        private void clearClipboardTimerElapsed(object sender, EventArgs e)
-        {
-            BeginInvoke(timerElapsedDelegate);
-        }
-
-        private void clearClipboard()
-        {
-            Clipboard.Clear();
-            if (Properties.Settings.Default.ShowNotifications)
-            {
-                notifyIcon.ShowBalloonTip(3000);
-            }
-        }
-
-        // Outline courtesy of https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.control.wndproc?redirectedfrom=MSDN&view=netframework-4.7.2#System_Windows_Forms_Control_WndProc_System_Windows_Forms_Message__
-        protected override void WndProc(ref Message m)
-        {
-            switch (m.Msg)
-            {
-                // Sent when the contents of the clipboard have changed. (https://docs.microsoft.com/en-us/windows/desktop/dataxchg/wm-clipboardupdate)
-                case WM_CLIPBOARDUPDATE:
-                    if (Clipboard.GetDataObject() != null && Clipboard.GetDataObject().GetFormats().Length > 0)
-                    {
-                        startClearClipboardTimer();
-                    }
-                    break;
-            }
-            base.WndProc(ref m);
-        }
-
-        private void ClipboardClear_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            // Get rid of the clipboard listener on exit
-            RemoveClipboardFormatListener(Handle);
-        }
-
-        private void showNotificationsCheckbox_CheckedChanged(object sender, EventArgs e)
-        {
             validateSaveButton();
         }
     }
