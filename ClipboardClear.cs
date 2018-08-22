@@ -57,6 +57,7 @@ namespace ClipboardClear
         private void showWindow()
         {
             clipboardTimoutNUD.Value = Properties.Settings.Default.TimeToClearClipboard;
+            showNotificationsCheckbox.Checked = Properties.Settings.Default.ShowNotifications;
             Show();
             this.WindowState = FormWindowState.Normal;
         }
@@ -92,12 +93,13 @@ namespace ClipboardClear
 
         private void validateSaveButton()
         {
-            saveButton.Enabled = clipboardTimoutNUD.Value != Properties.Settings.Default.TimeToClearClipboard;
+            saveButton.Enabled = clipboardTimoutNUD.Value != Properties.Settings.Default.TimeToClearClipboard || showNotificationsCheckbox.Checked != Properties.Settings.Default.ShowNotifications;
         }
 
         private void saveButton_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.TimeToClearClipboard = (int)clipboardTimoutNUD.Value;
+            Properties.Settings.Default.ShowNotifications = showNotificationsCheckbox.Checked;
             Properties.Settings.Default.Save();
             validateSaveButton();
         }
@@ -122,7 +124,10 @@ namespace ClipboardClear
         private void clearClipboard()
         {
             Clipboard.Clear();
-            notifyIcon.ShowBalloonTip(3000);
+            if (Properties.Settings.Default.ShowNotifications)
+            {
+                notifyIcon.ShowBalloonTip(3000);
+            }
         }
 
         // Outline courtesy of https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.control.wndproc?redirectedfrom=MSDN&view=netframework-4.7.2#System_Windows_Forms_Control_WndProc_System_Windows_Forms_Message__
@@ -145,6 +150,11 @@ namespace ClipboardClear
         {
             // Get rid of the clipboard listener on exit
             RemoveClipboardFormatListener(Handle);
+        }
+
+        private void showNotificationsCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            validateSaveButton();
         }
     }
 }

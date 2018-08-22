@@ -39,6 +39,7 @@
             this.notifyIconMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.notifyIconMenuStripShowItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIconMenuStripExitItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showNotificationsCheckbox = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clipboardTimoutNUD)).BeginInit();
             this.notifyIconMenuStrip.SuspendLayout();
@@ -46,13 +47,15 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.83178F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.16822F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 69F));
             this.tableLayoutPanel1.Controls.Add(this.clipboardTimeoutLabel, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.clipboardTimoutNUD, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.secondsLabel, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.saveButton, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.clipboardTimoutNUD, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.secondsLabel, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.showNotificationsCheckbox, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -65,10 +68,9 @@
             // 
             // clipboardTimeoutLabel
             // 
-            this.clipboardTimeoutLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.clipboardTimeoutLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.clipboardTimeoutLabel.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.clipboardTimeoutLabel, 2);
-            this.clipboardTimeoutLabel.Location = new System.Drawing.Point(82, 12);
+            this.clipboardTimeoutLabel.Location = new System.Drawing.Point(36, 12);
             this.clipboardTimeoutLabel.Name = "clipboardTimeoutLabel";
             this.clipboardTimeoutLabel.Size = new System.Drawing.Size(119, 13);
             this.clipboardTimeoutLabel.TabIndex = 0;
@@ -78,7 +80,7 @@
             // 
             this.clipboardTimoutNUD.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.clipboardTimoutNUD.BackColor = System.Drawing.SystemColors.Window;
-            this.clipboardTimoutNUD.Location = new System.Drawing.Point(61, 45);
+            this.clipboardTimoutNUD.Location = new System.Drawing.Point(161, 8);
             this.clipboardTimoutNUD.Maximum = new decimal(new int[] {
             60,
             0,
@@ -91,11 +93,11 @@
             0});
             this.clipboardTimoutNUD.Name = "clipboardTimoutNUD";
             this.clipboardTimoutNUD.ReadOnly = true;
-            this.clipboardTimoutNUD.Size = new System.Drawing.Size(120, 20);
+            this.clipboardTimoutNUD.Size = new System.Drawing.Size(50, 20);
             this.clipboardTimoutNUD.TabIndex = 1;
             this.clipboardTimoutNUD.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.clipboardTimoutNUD.Value = new decimal(new int[] {
-            5,
+            60,
             0,
             0,
             0});
@@ -105,7 +107,7 @@
             // 
             this.secondsLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.secondsLabel.AutoSize = true;
-            this.secondsLabel.Location = new System.Drawing.Point(187, 49);
+            this.secondsLabel.Location = new System.Drawing.Point(217, 12);
             this.secondsLabel.Name = "secondsLabel";
             this.secondsLabel.Size = new System.Drawing.Size(47, 13);
             this.secondsLabel.TabIndex = 2;
@@ -114,7 +116,7 @@
             // saveButton
             // 
             this.saveButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.tableLayoutPanel1.SetColumnSpan(this.saveButton, 2);
+            this.tableLayoutPanel1.SetColumnSpan(this.saveButton, 3);
             this.saveButton.Location = new System.Drawing.Point(104, 81);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
@@ -156,6 +158,19 @@
             this.notifyIconMenuStripExitItem.Text = "Exit";
             this.notifyIconMenuStripExitItem.Click += new System.EventHandler(this.notifyIconMenuStripExitItem_Click);
             // 
+            // showNotificationsCheckbox
+            // 
+            this.showNotificationsCheckbox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.showNotificationsCheckbox.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.showNotificationsCheckbox, 3);
+            this.showNotificationsCheckbox.Location = new System.Drawing.Point(13, 47);
+            this.showNotificationsCheckbox.Name = "showNotificationsCheckbox";
+            this.showNotificationsCheckbox.Size = new System.Drawing.Size(257, 17);
+            this.showNotificationsCheckbox.TabIndex = 4;
+            this.showNotificationsCheckbox.Text = "Show a notification when the clipboard is cleared";
+            this.showNotificationsCheckbox.UseVisualStyleBackColor = true;
+            this.showNotificationsCheckbox.CheckedChanged += new System.EventHandler(this.showNotificationsCheckbox_CheckedChanged);
+            // 
             // ClipboardClear
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -191,6 +206,7 @@
         private System.Windows.Forms.ContextMenuStrip notifyIconMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem notifyIconMenuStripShowItem;
         private System.Windows.Forms.ToolStripMenuItem notifyIconMenuStripExitItem;
+        private System.Windows.Forms.CheckBox showNotificationsCheckbox;
     }
 }
 
