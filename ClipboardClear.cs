@@ -56,10 +56,14 @@ namespace ClipboardClear
 
         private void showWindow()
         {
-            clipboardTimoutNUD.Value = Properties.Settings.Default.TimeToClearClipboard;
-            showNotificationsCheckbox.Checked = Properties.Settings.Default.ShowNotifications;
-            Show();
-            this.WindowState = FormWindowState.Normal;
+            if (this.WindowState != FormWindowState.Normal)
+            {
+                clipboardTimoutNUD.Value = Properties.Settings.Default.TimeToClearClipboard;
+                showNotificationsCheckbox.Checked = Properties.Settings.Default.ShowNotifications;
+                Show();
+                this.WindowState = FormWindowState.Normal;
+            }
+            Activate();
         }
 
         private void hideWindow()

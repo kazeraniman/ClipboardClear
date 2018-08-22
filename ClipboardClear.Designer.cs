@@ -50,7 +50,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.83178F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.16822F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 69F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 77F));
             this.tableLayoutPanel1.Controls.Add(this.clipboardTimeoutLabel, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.saveButton, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.clipboardTimoutNUD, 1, 0);
@@ -70,7 +70,7 @@
             // 
             this.clipboardTimeoutLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.clipboardTimeoutLabel.AutoSize = true;
-            this.clipboardTimeoutLabel.Location = new System.Drawing.Point(36, 12);
+            this.clipboardTimeoutLabel.Location = new System.Drawing.Point(30, 12);
             this.clipboardTimeoutLabel.Name = "clipboardTimeoutLabel";
             this.clipboardTimeoutLabel.Size = new System.Drawing.Size(119, 13);
             this.clipboardTimeoutLabel.TabIndex = 0;
@@ -80,7 +80,7 @@
             // 
             this.clipboardTimoutNUD.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.clipboardTimoutNUD.BackColor = System.Drawing.SystemColors.Window;
-            this.clipboardTimoutNUD.Location = new System.Drawing.Point(161, 8);
+            this.clipboardTimoutNUD.Location = new System.Drawing.Point(155, 8);
             this.clipboardTimoutNUD.Maximum = new decimal(new int[] {
             60,
             0,
@@ -93,8 +93,8 @@
             0});
             this.clipboardTimoutNUD.Name = "clipboardTimoutNUD";
             this.clipboardTimoutNUD.ReadOnly = true;
-            this.clipboardTimoutNUD.Size = new System.Drawing.Size(50, 20);
-            this.clipboardTimoutNUD.TabIndex = 1;
+            this.clipboardTimoutNUD.Size = new System.Drawing.Size(48, 20);
+            this.clipboardTimoutNUD.TabIndex = 0;
             this.clipboardTimoutNUD.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.clipboardTimoutNUD.Value = new decimal(new int[] {
             60,
@@ -107,7 +107,7 @@
             // 
             this.secondsLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.secondsLabel.AutoSize = true;
-            this.secondsLabel.Location = new System.Drawing.Point(217, 12);
+            this.secondsLabel.Location = new System.Drawing.Point(209, 12);
             this.secondsLabel.Name = "secondsLabel";
             this.secondsLabel.Size = new System.Drawing.Size(47, 13);
             this.secondsLabel.TabIndex = 2;
@@ -120,7 +120,7 @@
             this.saveButton.Location = new System.Drawing.Point(104, 81);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
-            this.saveButton.TabIndex = 3;
+            this.saveButton.TabIndex = 2;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
@@ -166,7 +166,7 @@
             this.showNotificationsCheckbox.Location = new System.Drawing.Point(13, 47);
             this.showNotificationsCheckbox.Name = "showNotificationsCheckbox";
             this.showNotificationsCheckbox.Size = new System.Drawing.Size(257, 17);
-            this.showNotificationsCheckbox.TabIndex = 4;
+            this.showNotificationsCheckbox.TabIndex = 1;
             this.showNotificationsCheckbox.Text = "Show a notification when the clipboard is cleared";
             this.showNotificationsCheckbox.UseVisualStyleBackColor = true;
             this.showNotificationsCheckbox.CheckedChanged += new System.EventHandler(this.showNotificationsCheckbox_CheckedChanged);
