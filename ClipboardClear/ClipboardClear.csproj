@@ -61,7 +61,7 @@
       <DependentUpon>ClipboardClear.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -84,8 +84,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="resources\clipboard-regular-white.ico" />
     <None Include="resources\clipboard-regular-black.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\clipboard-regular-white.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
