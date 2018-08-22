@@ -170,7 +170,7 @@
             this.ShowInTaskbar = false;
             this.Text = "Clipboard Clear";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ClipboardClear_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ClipboardClear_FormClosing);
             this.Resize += new System.EventHandler(this.ClipboardClear_Resize);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

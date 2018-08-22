@@ -32,10 +32,9 @@ namespace ClipboardClear
             validateSaveButton();
 
             // Hide the window in the system tray to start
+            this.ShowInTaskbar = false;
+            notifyIcon.Visible = true;
             hideWindow();
-
-            // Add in the clipboard listener
-            AddClipboardFormatListener(this.Handle);
 
             // Prepare the timer
             clearClipboardTimer = new System.Timers.Timer();
@@ -45,6 +44,9 @@ namespace ClipboardClear
 
             // Setup the delegate
             timerElapsedDelegate = new TimerElapsedDelegate(clearClipboard);
+
+            // Add in the clipboard listener
+            AddClipboardFormatListener(this.Handle);
         }
 
         private void notifyIcon_DoubleClick(object sender, EventArgs e)
@@ -55,16 +57,14 @@ namespace ClipboardClear
         private void showWindow()
         {
             clipboardTimoutNUD.Value = Properties.Settings.Default.TimeToClearClipboard;
+            Show();
             this.WindowState = FormWindowState.Normal;
-            this.ShowInTaskbar = true;
-            notifyIcon.Visible = false;
         }
 
         private void hideWindow()
         {
-            notifyIcon.Visible = true;
             this.WindowState = FormWindowState.Minimized;
-            this.ShowInTaskbar = false;
+            Hide();
         }
 
         private void ClipboardClear_Resize(object sender, EventArgs e)
@@ -99,13 +99,18 @@ namespace ClipboardClear
         {
             Properties.Settings.Default.TimeToClearClipboard = (int)clipboardTimoutNUD.Value;
             Properties.Settings.Default.Save();
-            clearClipboardTimer.Interval = Properties.Settings.Default.TimeToClearClipboard * 1000;
             validateSaveButton();
         }
 
         private void startClearClipboardTimer()
         {
+            // Stop the timer (in case it is underway)
             clearClipboardTimer.Stop();
+
+            // Update the interval to the latest value
+            clearClipboardTimer.Interval = Properties.Settings.Default.TimeToClearClipboard * 1000;
+
+            // Start up the timer
             clearClipboardTimer.Start();
         }
 
@@ -136,7 +141,7 @@ namespace ClipboardClear
             base.WndProc(ref m);
         }
 
-        private void ClipboardClear_FormClosed(object sender, FormClosedEventArgs e)
+        private void ClipboardClear_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Get rid of the clipboard listener on exit
             RemoveClipboardFormatListener(Handle);
