@@ -20,6 +20,7 @@ namespace ClipboardClear
         private const int WM_CLIPBOARDUPDATE = 0x031D;
 
         private System.Timers.Timer clearClipboardTimer;
+        private System.Timers.Timer retryClearClipboardTimer;
         private delegate void TimerElapsedDelegate();
         TimerElapsedDelegate timerElapsedDelegate;
 
@@ -36,11 +37,17 @@ namespace ClipboardClear
             notifyIcon.Visible = true;
             hideWindow();
 
-            // Prepare the timer
+            // Prepare the main timer
             clearClipboardTimer = new System.Timers.Timer();
             clearClipboardTimer.Interval = Properties.Settings.Default.TimeToClearClipboard * 1000;
             clearClipboardTimer.AutoReset = false;
             clearClipboardTimer.Elapsed += new System.Timers.ElapsedEventHandler(clearClipboardTimerElapsed);
+
+            // Prepare the retry timer
+            retryClearClipboardTimer = new System.Timers.Timer();
+            retryClearClipboardTimer.AutoReset = false;
+            retryClearClipboardTimer.Interval = 5000;
+            retryClearClipboardTimer.Elapsed += new System.Timers.ElapsedEventHandler(clearClipboardTimerElapsed);
 
             // Setup the delegate
             timerElapsedDelegate = new TimerElapsedDelegate(clearClipboard);
@@ -81,7 +88,8 @@ namespace ClipboardClear
         // Restarts the timer to clear the clipboard with the currently set timout interval.
         private void startClearClipboardTimer()
         {
-            // Stop the timer (in case it is underway)
+            // Stop the timers (in case they are underway)
+            retryClearClipboardTimer.Stop();
             clearClipboardTimer.Stop();
 
             // Update the interval to the latest value
@@ -89,6 +97,13 @@ namespace ClipboardClear
 
             // Start up the timer
             clearClipboardTimer.Start();
+        }
+
+        // Restart the retry timer
+        private void startRetryClearClipboardTimer()
+        {
+            retryClearClipboardTimer.Stop();
+            retryClearClipboardTimer.Start();
         }
 
         // Event handler for the clearClipboardTimer's elapsed event.
@@ -100,10 +115,17 @@ namespace ClipboardClear
         // Clears the clipboard and optionally provides a notification.
         private void clearClipboard()
         {
-            Clipboard.Clear();
-            if (Properties.Settings.Default.ShowNotifications)
+            try
             {
-                notifyIcon.ShowBalloonTip(3000);
+                Clipboard.Clear();
+                if (Properties.Settings.Default.ShowNotifications)
+                {
+                    notifyIcon.ShowBalloonTip(3000);
+                }
+            }
+            catch (ExternalException) {
+                // If the clipboard is busy, restart the retry timer to try again later
+                startRetryClearClipboardTimer();
             }
         }
 
